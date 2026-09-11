@@ -8,6 +8,7 @@ const connectToDb = async () => {
     throw new Error('MONGODB_URI is required.');
   }
 
+
   const client = new MongoClient(connectionString);
   await client.connect();
   database = client.db(process.env.MONGODB_DB_NAME || 'practice');
@@ -20,5 +21,6 @@ const getDb = () => {
   }
   return database;
 };
+
 
 export { connectToDb, getDb };
