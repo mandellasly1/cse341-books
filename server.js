@@ -1,5 +1,5 @@
 import app from './app.js';
-import { connectToDb } from './src/db/connect.js';
+import { connectToDb } from './src/db/connect.js';  // ✅ add getDb
 
 const PORT = process.env.PORT;
 
@@ -16,7 +16,8 @@ const startServer = async () => {
     });
   } catch (error) {
     console.error('Database connection failed:', error.message);
-    process.exit(1);}
+    process.exit(1);
+  }
 };
 
 await startServer();
