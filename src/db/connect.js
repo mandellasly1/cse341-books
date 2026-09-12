@@ -1,6 +1,8 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient  } from 'mongodb';
+
 
 let database;
+
 
 const connectToDb = async () => {
   const connectionString = process.env.MONGODB_URI;
