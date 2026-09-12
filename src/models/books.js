@@ -14,6 +14,11 @@ const getBookById = async (id) => {
   return book;
 };
 
+const addBook = async (book) => {
+  const db = getDb();
+  const collection = db.collection('books');
+  const result = await collection.insertOne(book);
+  return result;
+};
 
-
-export { getAllBooks, getBookById };
+export { getAllBooks, getBookById, addBook };
