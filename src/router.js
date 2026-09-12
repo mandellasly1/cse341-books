@@ -4,7 +4,9 @@ import { getBooksHandler, getBookByIdHandler, addBookHandler } from './controlle
 const router = express.Router();
 
 router.get('/books', getBooksHandler);
+
 router.get('/books/:id', getBookByIdHandler);
+
 router.post('/books', addBookHandler);
 
 export default router;
