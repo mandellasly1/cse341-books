@@ -1,0 +1,38 @@
+# Week 01 Reflection
+
+1. Include a link to one of your Pull Requests (PRs) at GitHub. (It should be merged and closed at this point.)
+
+GitHub Pull Request Link: https://github.com/mandellasly1/cse341-books/commit/c1998391d5d13e65439b8f0e0f191806693521dd
+
+2. Include a link to one of your Issues at GitHub. (It should be closed at this point.)
+
+GitHub Issue Link: https://github.com/mandellasly1/cse341-books/issues/2
+
+3. Which issue took more or less time than expected? Why?
+
+Answer: The POST route issue took me more time than I thought. I had to fix my commit message and make sure it linked to the right issue. That slowed me down a little, but it helped me learn how GitHub connects commits and issues.
+
+4. Include a link to your walk-though video. (It must include your name, show your web service working at Render, explain the way your `Get Single Book` controller works, and discuss status codes.):
+
+Video link: https://www.loom.com/share/8341f0f8de72416199d85cbc7a0c6748
+
+5.a. Include a GitHub link to a file that shows how your app uses sensitive data, such as the MongoDB connection string.
+
+GitHub link: https://github.com/mandellasly1/cse341-books/blob/main/src/db/connect.js
+
+5.b. How did you store sensitive data? Why is that approach important?
+
+Answer: I stored my MongoDB connection string in a .env file and used process.env to read it. This is important because it keeps private information out of my code and GitHub repo, so nobody else can see it.
+
+6.a. Include a GitHub link to a file that shows one other implementation decision you made.
+
+GitHub link: https://github.com/mandellasly1/cse341-books/blob/main/src/controllers/books.js
+
+6.b. What decision does this file show, and why did you make that choice?
+
+Answer: This file shows how I handled errors in my controller. I decided to return safe JSON messages with status codes like 404 and 500. I made this choice so the API is clear and secure when something goes wrong.
+
+7. What is one specific habit or process you will work on for next week?
+
+Answer: Next week I will plan my commits better. I want to write the right commit message the first time, so I don’t have to amend it later. This will save me time and keep my GitHub history clean.
+
