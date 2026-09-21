@@ -1,4 +1,4 @@
-import { getAllBooks, getBookById, addBook } from '../models/books.js';
+import { getAllBooks, getBookById } from '../models/books.js';
 import { getDb } from '../db/connect.js';
 
 // GET all books
@@ -29,53 +29,49 @@ const getBookByIdHandler = async (req, res) => {
   }
 };
 
-// POST add book
+// POST add book with author validation
 const addBookHandler = async (req, res) => {
   try {
     const newBook = req.body;
 
-    if (!newBook.id || !newBook.title || !newBook.author || !newBook.publicationDate) {
-      return res.status(400).json({ message: 'Missing required fields' });
+    // Validate required fields
+    if (!newBook.id || !newBook.title || !newBook.authorId || !newBook.publicationDate) {
+      return res.status(400).json({ message: 'id, title, authorId, and publicationDate are required' });
     }
 
-    const result = await addBook(newBook);
-    return res.status(201).json({ message: 'Book added successfully', id: result.insertedId });
+    const db = getDb();
+
+    // Check if author exists
+    const author = await db.collection('authors').findOne({ id: newBook.authorId });
+    if (!author) {
+      return res.status(400).json({ message: `Author with id ${newBook.authorId} does not exist` });
+    }
+
+    // Insert the new book
+    const result = await db.collection('books').insertOne(newBook);
+
+    if (result.insertedId) {
+      return res.status(201).json({
+        message: 'Book added successfully',
+        book: newBook
+      });
+    } else {
+      return res.status(500).json({ message: 'Unable to add book' });
+    }
   } catch (error) {
     console.error('POST /books failed:', error.message);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-// Extra: direct MongoDB create (if you want to bypass models)
-const createBook = async (req, res) => {
-  try {
-    const { id, title, author } = req.body;
-
-    if (!id || !title || !author) {
-      return res.status(400).json({ message: 'id, title, and author are required' });
-    }
-
-    const newBook = { id, title, author };
-    const result = await getDb().collection('books').insertOne(newBook);
-
-    if (result.insertedId) {
-      return res.status(201).json(newBook);
-    } else {
-      return res.status(500).json({ message: 'Unable to create book' });
-    }
-  } catch (error) {
-    console.error('Direct createBook failed:', error.message);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
+// PUT update book
 const updateBookHandler = async (req, res) => {
   try {
     const bookId = req.params.id;
     const updatedBook = req.body;
 
-    if (!updatedBook.title || !updatedBook.author) {
-      return res.status(400).json({ message: 'title and author are required' });
+    if (!updatedBook.title || !updatedBook.authorId) {
+      return res.status(400).json({ message: 'title and authorId are required' });
     }
 
     const result = await getDb()
@@ -93,6 +89,7 @@ const updateBookHandler = async (req, res) => {
   }
 };
 
+// DELETE book
 const deleteBookHandler = async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -112,5 +109,10 @@ const deleteBookHandler = async (req, res) => {
   }
 };
 
-
-export { getBooksHandler, getBookByIdHandler, addBookHandler, createBook, updateBookHandler, deleteBookHandler };
+export {
+  getBooksHandler,
+  getBookByIdHandler,
+  addBookHandler,
+  updateBookHandler,
+  deleteBookHandler
+};
