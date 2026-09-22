@@ -150,6 +150,7 @@ router.put('/books/:id', updateBookHandler);
  */
 router.delete('/books/:id', deleteBookHandler);
 
+
 // AUTHOR routes
 
 /**
@@ -189,6 +190,7 @@ router.get('/authors', getAuthorsHandler);
  *         description: Internal server error
  */
 router.get('/authors/:id', getAuthorByIdHandler);
+
 
 /**
  * @openapi
@@ -270,6 +272,8 @@ router.post('/authors', addAuthorHandler);
  *         description: Internal server error
  */
 router.put('/authors/:id', updateAuthorHandler);
+
+
 /**
  * @openapi
  * /authors/{id}:
