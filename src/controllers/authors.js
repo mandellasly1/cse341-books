@@ -53,6 +53,7 @@ const addAuthorHandler = async (req, res) => {
   }
 };
 
+
 // PUT update author
 const updateAuthorHandler = async (req, res) => {
   try {
@@ -63,6 +64,7 @@ const updateAuthorHandler = async (req, res) => {
       return res.status(400).json({ message: 'name and birthYear are required' });
     }
 
+    
     const result = await getDb().collection('authors').findOneAndUpdate(
       { id: authorId },
       { $set: updates },
@@ -72,6 +74,7 @@ const updateAuthorHandler = async (req, res) => {
     if (!result.value) {
       return res.status(404).json({ message: 'Author not found' });
     }
+
 
     return res.status(200).json(result.value);
   } catch (error) {
