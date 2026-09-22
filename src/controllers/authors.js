@@ -53,6 +53,34 @@ const addAuthorHandler = async (req, res) => {
   }
 };
 
+// PUT update author
+const updateAuthorHandler = async (req, res) => {
+  try {
+    const authorId = req.params.id;
+    const updates = req.body;
+
+    if (!updates.name || !updates.birthYear) {
+      return res.status(400).json({ message: 'name and birthYear are required' });
+    }
+
+    const result = await getDb().collection('authors').findOneAndUpdate(
+      { id: authorId },
+      { $set: updates },
+      { returnDocument: 'after' }
+    );
+
+    if (!result.value) {
+      return res.status(404).json({ message: 'Author not found' });
+    }
+
+    return res.status(200).json(result.value);
+  } catch (error) {
+    console.error('PUT /authors/:id failed:', error.message);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 // DELETE author with validation
 const deleteAuthorHandler = async (req, res) => {
   try {
@@ -86,5 +114,6 @@ export {
   getAuthorsHandler,
   getAuthorByIdHandler,
   addAuthorHandler,
+  updateAuthorHandler,
   deleteAuthorHandler
 };

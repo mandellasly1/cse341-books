@@ -1,6 +1,6 @@
 import express from 'express';
 import { getBooksHandler, getBookByIdHandler, addBookHandler, updateBookHandler, deleteBookHandler } from './controllers/books.js';
-import { getAuthorsHandler, getAuthorByIdHandler, addAuthorHandler, deleteAuthorHandler } from './controllers/authors.js';
+import { getAuthorsHandler, getAuthorByIdHandler, addAuthorHandler, updateAuthorHandler, deleteAuthorHandler } from './controllers/authors.js';
 
 const router = express.Router();
 
@@ -226,6 +226,93 @@ router.get('/authors/:id', getAuthorByIdHandler);
  *         description: Internal server error
  */
 router.post('/authors', addAuthorHandler);
+
+
+/**
+ * @openapi
+ * /authors/{id}:
+ *   put:
+ *     summary: Update an author
+ *     tags:
+ *       - Authors
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The custom author id, such as a1
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - birthYear
+ *             properties:
+ *               name:
+ *                 type: string
+ *               birthYear:
+ *                 type: integer
+ *           example:
+ *             name: Updated Author
+ *             birthYear: 1981
+ *     responses:
+ *       200:
+ *         description: Author updated successfully
+ *       400:
+ *         description: Invalid author data
+ *       404:
+ *         description: Author not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/authors/:id', updateAuthorHandler);
+/**
+ * @openapi
+ * /authors/{id}:
+ *   put:
+ *     summary: Update an author
+ *     tags:
+ *       - Authors
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The custom author id, such as a1
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - birthYear
+ *             properties:
+ *               name:
+ *                 type: string
+ *               birthYear:
+ *                 type: integer
+ *           example:
+ *             name: Updated Author
+ *             birthYear: 1981
+ *     responses:
+ *       200:
+ *         description: Author updated successfully
+ *       400:
+ *         description: Invalid author data
+ *       404:
+ *         description: Author not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put('/authors/:id', updateAuthorHandler);
+
 
 /**
  * @openapi
