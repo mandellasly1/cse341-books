@@ -31,18 +31,24 @@ const getAuthorByIdHandler = async (req, res) => {
 // POST new author
 const addAuthorHandler = async (req, res) => {
   try {
-    const newAuthor = req.body;
+    const { id, name, birthYear, nationality } = req.body;
 
-    if (!newAuthor.id || !newAuthor.name) {
-      return res.status(400).json({ message: 'id and name are required' });
+    if (!id || !name || birthYear === undefined || !nationality) {
+      return res.status(400).json({ message: 'id, name, birthYear, and nationality are required' });
     }
 
-    const result = await getDb().collection('authors').insertOne(newAuthor);
+    const db = getDb();
+    const existing = await db.collection('authors').findOne({ id });
+    if (existing) {
+      return res.status(400).json({ message: 'Author id already exists' });
+    }
+
+    const result = await db.collection('authors').insertOne({ id, name, birthYear, nationality });
 
     if (result.insertedId) {
       return res.status(201).json({
         message: 'Author added successfully',
-        author: newAuthor
+        author: { id, name, birthYear, nationality }
       });
     } else {
       return res.status(500).json({ message: 'Unable to add author' });
@@ -53,22 +59,19 @@ const addAuthorHandler = async (req, res) => {
   }
 };
 
-
-
 // PUT update author
 const updateAuthorHandler = async (req, res) => {
   try {
     const authorId = req.params.id;
-    const updates = req.body;
+    const { name, birthYear, nationality } = req.body;
 
-    if (!updates.name || !updates.birthYear) {
-      return res.status(400).json({ message: 'name and birthYear are required' });
+    if (!name || birthYear === undefined || !nationality) {
+      return res.status(400).json({ message: 'name, birthYear, and nationality are required' });
     }
 
-    
     const result = await getDb().collection('authors').findOneAndUpdate(
       { id: authorId },
-      { $set: updates },
+      { $set: { name, birthYear, nationality } },
       { returnDocument: 'after' }
     );
 
@@ -76,14 +79,12 @@ const updateAuthorHandler = async (req, res) => {
       return res.status(404).json({ message: 'Author not found' });
     }
 
-
     return res.status(200).json(result.value);
   } catch (error) {
     console.error('PUT /authors/:id failed:', error.message);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 // DELETE author with validation
 const deleteAuthorHandler = async (req, res) => {
@@ -112,7 +113,6 @@ const deleteAuthorHandler = async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 // ✅ Export all handlers once
 export {

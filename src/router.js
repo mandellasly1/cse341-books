@@ -4,7 +4,7 @@ import { getAuthorsHandler, getAuthorByIdHandler, addAuthorHandler, updateAuthor
 
 const router = express.Router();
 
-// BOOK routes
+// ==================== BOOK ROUTES ====================
 
 /**
  * @openapi
@@ -20,7 +20,6 @@ const router = express.Router();
  *         description: Unable to retrieve books
  */
 router.get('/books', getBooksHandler);
-
 
 /**
  * @openapi
@@ -77,7 +76,7 @@ router.get('/books/:id', getBookByIdHandler);
  *             id: b1
  *             title: Things Fall Apart
  *             authorId: a1
- *             publicationDate: 1958
+ *             publicationDate: 1958-01-01
  *     responses:
  *       201:
  *         description: Book added successfully
@@ -107,14 +106,21 @@ router.post('/books', addBookHandler);
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - title
+ *               - authorId
+ *               - publicationDate
  *             properties:
  *               title:
  *                 type: string
  *               authorId:
  *                 type: string
+ *               publicationDate:
+ *                 type: string
  *           example:
  *             title: Updated Title
  *             authorId: a1
+ *             publicationDate: 1960-01-01
  *     responses:
  *       200:
  *         description: Book updated successfully
@@ -150,8 +156,7 @@ router.put('/books/:id', updateBookHandler);
  */
 router.delete('/books/:id', deleteBookHandler);
 
-
-// AUTHOR routes
+// ==================== AUTHOR ROUTES ====================
 
 /**
  * @openapi
@@ -191,7 +196,6 @@ router.get('/authors', getAuthorsHandler);
  */
 router.get('/authors/:id', getAuthorByIdHandler);
 
-
 /**
  * @openapi
  * /authors:
@@ -208,17 +212,22 @@ router.get('/authors/:id', getAuthorByIdHandler);
  *             required:
  *               - id
  *               - name
+ *               - birthYear
+ *               - nationality
  *             properties:
  *               id:
  *                 type: string
  *               name:
  *                 type: string
- *               bio:
+ *               birthYear:
+ *                 type: integer
+ *               nationality:
  *                 type: string
  *           example:
  *             id: a1
  *             name: Chinua Achebe
- *             bio: Nigerian novelist, poet, and critic
+ *             birthYear: 1930
+ *             nationality: Nigerian
  *     responses:
  *       201:
  *         description: Author added successfully
@@ -228,7 +237,6 @@ router.get('/authors/:id', getAuthorByIdHandler);
  *         description: Internal server error
  */
 router.post('/authors', addAuthorHandler);
-
 
 /**
  * @openapi
@@ -253,14 +261,18 @@ router.post('/authors', addAuthorHandler);
  *             required:
  *               - name
  *               - birthYear
+ *               - nationality
  *             properties:
  *               name:
  *                 type: string
  *               birthYear:
  *                 type: integer
+ *               nationality:
+ *                 type: string
  *           example:
  *             name: Updated Author
  *             birthYear: 1981
+ *             nationality: Nigerian
  *     responses:
  *       200:
  *         description: Author updated successfully
@@ -272,7 +284,6 @@ router.post('/authors', addAuthorHandler);
  *         description: Internal server error
  */
 router.put('/authors/:id', updateAuthorHandler);
-
 
 /**
  * @openapi
@@ -298,7 +309,5 @@ router.put('/authors/:id', updateAuthorHandler);
  *         description: Internal server error
  */
 router.delete('/authors/:id', deleteAuthorHandler);
-
-
 
 export default router;
