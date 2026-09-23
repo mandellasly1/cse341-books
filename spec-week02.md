@@ -110,3 +110,169 @@ All book routes must be documented in Swagger, including request bodies for POST
 ### Deployment Expectations
 
 After implementation, the book routes must work locally and from the deployed Render application. The deployed Swagger page at /api-docs must allow full testing of every book route.
+
+
+# Authors API Week 02 Spec - Version 1 specification
+
+
+## Feature 2: Author CRUD Operations
+
+### Goal
+
+The goal of the Author feature is to create a dedicated authors collection in the database that stores structured information about each author, including their custom ID, name, and birth year. This collection will allow the API to fully manage author data through CRUD operations (create, read, update, delete).
+
+By separating authors into their own collection, books can reference authors using the authorId field, ensuring a consistent relationship between the two collections. This design makes it possible to:
+
+Add new authors and link them to books.
+
+Retrieve author details independently of books.
+
+Update author information when needed.
+
+Prevent deletion of authors who are still referenced by existing books (to maintain data integrity).
+
+Every author route must be documented in Swagger so that developers and testers can clearly understand the expected request and response formats, test the endpoints directly from the browser, and verify that the API enforces rules such as required fields and relationship constraints.
+
+
+### Data Model
+
+Author documents will be stored in the authors collection.
+
+Required author fields:
+
+id: string, required, custom id such as a1
+
+name: string, required
+
+birthYear: integer, required
+
+bio: string, optional
+
+Authors will use custom string ids instead of MongoDB _id values for route parameters.
+
+
+### Relationship to Books
+
+Each book references its author with an authorId.
+
+When deleting an author, the API must reject the request with a 409 status code if any book references that author.
+
+When creating or updating a book, the authorId must match an existing author’s id.
+
+
+### Routes
+
+### GET /authors
+
+Purpose: Return all authors.
+
+Success:
+
+Status code: 200
+
+Response body: an array of author objects
+
+Errors:
+
+500 if an unexpected server or database error occurs
+
+### GET /authors/:id
+
+Purpose: Return one author by their custom id.
+
+Success:
+
+Status code: 200
+
+Response body: the matching author object
+
+Errors:
+
+404 if no author exists with that id
+
+500 if an unexpected server or database error occurs
+
+
+### POST /authors
+
+Purpose: Create a new author.
+
+Request body:
+
+json
+{
+  "id": "a3",
+  "name": "New Author",
+  "birthYear": 1970,
+  "bio": "Optional biography text"
+}
+Success:
+
+Status code: 201
+
+Response body: the newly created author object
+
+Errors:
+
+400 if a required field is missing
+
+400 if the id already exists
+
+500 if an unexpected server or database error occurs
+
+
+### PUT /authors/:id
+
+Purpose: Update an existing author.
+
+Request body:
+
+json
+{
+  "name": "Updated Author",
+  "birthYear": 1981,
+  "bio": "Updated biography"
+}
+Success:
+
+Status code: 200
+
+Response body: the updated author object
+
+Errors:
+
+400 if a required field is missing
+
+404 if no author exists with that id
+
+500 if an unexpected server or database error occurs
+
+
+### DELETE /authors/:id
+
+Purpose: Delete an existing author.
+
+Success:
+
+Status code: 204
+
+Response body: none
+
+Errors:
+
+404 if no author exists with that id
+
+409 if books reference this author
+
+500 if an unexpected server or database error occurs
+
+
+
+### Swagger Documentation
+
+All author routes must be documented in Swagger, including request bodies for POST and PUT.
+
+
+### Deployment Expectations
+
+After implementation, the author routes must work locally and from the deployed Render application. The deployed Swagger page at /api-docs must allow someone to test every author route from the browser.

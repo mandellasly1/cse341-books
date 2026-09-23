@@ -1,4 +1,4 @@
-import { writeFileSync } from 'node:fs';
+
 import swaggerJsdoc from 'swagger-jsdoc';
 
 const options = {
@@ -21,5 +21,9 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-writeFileSync('./swagger.json', JSON.stringify(swaggerSpec, null, 2));
-console.log('Swagger documentation generated.');
+
+
+
+// Export the spec so app.js can import it
+export default swaggerSpec;
+

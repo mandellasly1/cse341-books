@@ -16,7 +16,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node --env-file=.env server.js",
-    "dev": "nodemon --env-file=.env server.js",
+    "dev": "nodemon --ext js,mjs,cjs --env-file=.env server.js",
     "swagger": "node swagger.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
