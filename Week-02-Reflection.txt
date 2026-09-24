@@ -36,6 +36,7 @@ Adding validation and handling relationships (like blocking author deletion when
 
 6. How did Swagger help you in your work this week?
 
+
 Answer:
 Swagger made testing easier because I could run each route directly in the browser and see the responses. It helped me confirm that my status codes and required fields matched the spec.
 
