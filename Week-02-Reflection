@@ -1,0 +1,47 @@
+# Week 02 Reflection
+
+## Links
+
+1. Provide your walk-through video link. This video must demonstrate your API working at Render and follow the script in the assignment.
+Video link: 
+https://www.loom.com/share/9160bc0a729f4f8eb4d22f66a8e5783b
+
+2. Provide a link to your deployed Render api-docs URL: 
+https://cse341-books-yjml.onrender.com/api-docs
+
+Render link: 
+https://cse341-books-yjml.onrender.com 
+
+3. Provide links to your Pull Requests (they should be merged at this point):
+Books PR:
+https://github.com/mandellasly1/cse341-books/pull/7
+
+Authors PR:
+https://github.com/mandellasly1/cse341-books/pull/13
+
+4. Provide links to your GitHub Issues (they should be closed at this point).
+Books Issue:
+https://github.com/mandellasly1/cse341-books/issues/11
+
+Authors Issue:
+https://github.com/mandellasly1/cse341-books/issues/12
+
+## Plan vs. Implementation
+
+5. Which part of the work took more or less time than expected? Why?
+
+Answer:
+Adding validation and handling relationships (like blocking author deletion when books reference them) took longer than expected. Writing the routes and Swagger docs was faster because I already had a clear pattern from Week 01.
+
+
+6. How did Swagger help you in your work this week?
+
+Answer:
+Swagger made testing easier because I could run each route directly in the browser and see the responses. It helped me confirm that my status codes and required fields matched the spec.
+
+## Week 03 Improvement
+
+7. What is one specific habit or process you will apply next week?
+
+Answer:
+Next week I will commit and push more often in smaller steps. This will make my pull requests cleaner and easier to review.
